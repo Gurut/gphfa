@@ -6,13 +6,13 @@ unsigned int RSHash(const std::string& str)
    unsigned int a    = 63689;
    unsigned int hash = 0;
 
-   for(unsigned int i = 0; i < str.length(); i++)
+   for(std::size_t i = 0; i < str.length(); i++)
    {
       hash = hash * a + str[i];
       a    = a * b;
    }
 
-   return (hash & 0x7FFFFFFF);
+   return hash;
 }
 /* End Of RS Hash Function */
 
@@ -21,12 +21,12 @@ unsigned int JSHash(const std::string& str)
 {
    unsigned int hash = 1315423911;
 
-   for(unsigned int i = 0; i < str.length(); i++)
+   for(std::size_t i = 0; i < str.length(); i++)
    {
       hash ^= ((hash << 5) + str[i] + (hash >> 2));
    }
 
-   return (hash & 0x7FFFFFFF);
+   return hash;
 }
 /* End Of JS Hash Function */
 
@@ -40,7 +40,7 @@ unsigned int PJWHash(const std::string& str)
    unsigned int hash              = 0;
    unsigned int test              = 0;
 
-   for(unsigned int i = 0; i < str.length(); i++)
+   for(std::size_t i = 0; i < str.length(); i++)
    {
       hash = (hash << OneEighth) + str[i];
 
@@ -50,7 +50,7 @@ unsigned int PJWHash(const std::string& str)
       }
    }
 
-   return (hash & 0x7FFFFFFF);
+   return hash;
 }
 /* End Of  P. J. Weinberger Hash Function */
 
@@ -60,17 +60,17 @@ unsigned int ELFHash(const std::string& str)
    unsigned int hash = 0;
    unsigned int x    = 0;
 
-   for(unsigned int i = 0; i < str.length(); i++)
+   for(std::size_t i = 0; i < str.length(); i++)
    {
       hash = (hash << 4) + str[i];
       if((x = hash & 0xF0000000L) != 0)
       {
          hash ^= (x >> 24);
-         hash &= ~x;
       }
+      hash &= ~x;
    }
 
-   return (hash & 0x7FFFFFFF);
+   return hash;
 }
 /* End Of ELF Hash Function */
 
@@ -80,12 +80,12 @@ unsigned int BKDRHash(const std::string& str)
    unsigned int seed = 131; // 31 131 1313 13131 131313 etc..
    unsigned int hash = 0;
 
-   for(unsigned int i = 0; i < str.length(); i++)
+   for(std::size_t i = 0; i < str.length(); i++)
    {
       hash = (hash * seed) + str[i];
    }
 
-   return (hash & 0x7FFFFFFF);
+   return hash;
 }
 /* End Of BKDR Hash Function */
 
@@ -94,12 +94,12 @@ unsigned int SDBMHash(const std::string& str)
 {
    unsigned int hash = 0;
 
-   for(unsigned int i = 0; i < str.length(); i++)
+   for(std::size_t i = 0; i < str.length(); i++)
    {
       hash = str[i] + (hash << 6) + (hash << 16) - hash;
    }
 
-   return (hash & 0x7FFFFFFF);
+   return hash;
 }
 /* End Of SDBM Hash Function */
 
@@ -108,12 +108,12 @@ unsigned int DJBHash(const std::string& str)
 {
    unsigned int hash = 5381;
 
-   for(unsigned int i = 0; i < str.length(); i++)
+   for(std::size_t i = 0; i < str.length(); i++)
    {
       hash = ((hash << 5) + hash) + str[i];
    }
 
-   return (hash & 0x7FFFFFFF);
+   return hash;
 }
 /* End Of DJB Hash Function */
 
@@ -122,26 +122,54 @@ unsigned int DEKHash(const std::string& str)
 {
    unsigned int hash = static_cast<unsigned int>(str.length());
 
-   for(unsigned int i = 0; i < str.length(); i++)
+   for(std::size_t i = 0; i < str.length(); i++)
    {
       hash = ((hash << 5) ^ (hash >> 27)) ^ str[i];
    }
 
-   return (hash & 0x7FFFFFFF);
+   return hash;
 }
 /* End Of DEK Hash Function */
+
+
+unsigned int BPHash(const std::string& str)
+{
+   unsigned int hash = 0;
+   for(std::size_t i = 0; i < str.length(); i++)
+   {
+      hash = hash << 7 ^ str[i];
+   }
+
+   return hash;
+}
+/* End Of BP Hash Function */
+
+
+unsigned int FNVHash(const std::string& str)
+{
+   const unsigned int fnv_prime = 0x811C9DC5;
+   unsigned int hash = 0;
+   for(std::size_t i = 0; i < str.length(); i++)
+   {
+      hash *= fnv_prime;
+      hash ^= str[i];
+   }
+
+   return hash;
+}
+/* End Of FNV Hash Function */
 
 
 unsigned int APHash(const std::string& str)
 {
    unsigned int hash = 0;
 
-   for(unsigned int i = 0; i < str.length(); i++)
+   for(std::size_t i = 0; i < str.length(); i++)
    {
       hash ^= ((i & 1) == 0) ? (  (hash <<  7) ^ str[i] ^ (hash >> 3)) :
                                (~((hash << 11) ^ str[i] ^ (hash >> 5)));
    }
 
-   return (hash & 0x7FFFFFFF);
+   return hash;
 }
 /* End Of AP Hash Function */

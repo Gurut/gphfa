@@ -31,6 +31,8 @@ function BKDRHash (const Str : String) : Cardinal;
 function SDBMHash (const Str : String) : Cardinal;
 function DJBHash  (const Str : String) : Cardinal;
 function DEKHash  (const Str : String) : Cardinal;
+function HRHash   (const Str : String) : Cardinal;
+function FNVHash  (const Str : String) : Cardinal;
 function APHash   (const Str : String) : Cardinal;
 
 implementation
@@ -48,7 +50,6 @@ begin
     Result := Result * a + Ord(Str[i]);
     a      := a * b;
   end;
-  Result := (Result and $7FFFFFFF);
 end;
 (* End Of RS Hash function *)
 
@@ -62,7 +63,6 @@ begin
   begin
     Result := Result xor ((Result shl 5) + Ord(Str[i]) + (Result shr 2));
   end;
-  Result := (Result and $7FFFFFFF);
 end;
 (* End Of JS Hash function *)
 
@@ -86,7 +86,6 @@ begin
       Result := (Result xor (Test shr ThreeQuarters)) and (not HighBits);
     end;
   end;
-  Result := (Result and $7FFFFFFF);
 end;
 (* End Of P. J. Weinberger Hash function *)
 
@@ -104,10 +103,9 @@ begin
     if (x <> 0) then
     begin
       Result := Result xor (x shr 24);
-      Result := Result and (not x);
     end;
+    Result := Result and (not x);
   end;
-  Result := (Result and $7FFFFFFF);
 end;
 (* End Of ELF Hash function *)
 
@@ -122,7 +120,6 @@ begin
   begin
     Result := (Result * Seed) + Ord(Str[i]);
   end;
-  Result := (Result and $7FFFFFFF);
 end;
 (* End Of BKDR Hash function *)
 
@@ -136,7 +133,6 @@ begin
   begin
     Result := Ord(str[i]) + (Result shl 6) + (Result shl 16) - Result;
   end;
-  Result := (Result and $7FFFFFFF);
 end;
 (* End Of SDBM Hash function *)
 
@@ -150,7 +146,6 @@ begin
   begin
     Result := ((Result shl 5) + Result) + Ord(Str[i]);
   end;
-  Result := (Result and $7FFFFFFF);
 end;
 (* End Of DJB Hash function *)
 
@@ -164,9 +159,36 @@ begin
   begin
     Result := ((Result shr 5) xor (Result shl 27)) xor Ord(Str[i]);
   end;
-  Result := (Result and $7FFFFFFF);
 end;
 (* End Of DEK Hash function *)
+
+
+function BPHash(const Str : String) : Cardinal;
+var
+  i : Cardinal;
+begin
+  Result := 0;
+  for i := 1 to Length(Str) do
+  begin
+    Result := hash shl 7 xor Ord(Str[i]);
+  end;
+end;
+(* End Of BP Hash function *)
+
+
+function FNVHash(const Str : String) : Cardinal;
+const FNVPrime = $811C9DC5;
+var
+  i : Cardinal;
+begin
+  Result := 0;
+  for i := 1 to Length(Str) do
+  begin
+    Result := Result * FNVPrime;
+    Result := Result xor Ord(Str[i]);
+  end;
+end;
+(* End Of FNV Hash function *)
 
 
 function APHash(const Str : String) : Cardinal;
@@ -181,7 +203,6 @@ begin
     else
       Result := Result xor (not((Result shl 11) xor Ord(Str[i]) xor (Result shr 5)));
   end;
-  Result := (Result and $7FFFFFFF);
 end;
 (* End Of AP Hash function *)
 

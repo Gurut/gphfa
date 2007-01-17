@@ -33,7 +33,7 @@ class GeneralHashFunctionLibrary
          a    = a * b;
       }
 
-      return (hash & 0x7FFFFFFF);
+      return hash;
    }
    /* End Of RS Hash Function */
 
@@ -47,7 +47,7 @@ class GeneralHashFunctionLibrary
          hash ^= ((hash << 5) + str.charAt(i) + (hash >> 2));
       }
 
-      return (hash & 0x7FFFFFFF);
+      return hash;
    }
    /* End Of JS Hash Function */
 
@@ -71,7 +71,7 @@ class GeneralHashFunctionLibrary
          }
       }
 
-      return (hash & 0x7FFFFFFF);
+      return hash;
    }
    /* End Of  P. J. Weinberger Hash Function */
 
@@ -88,11 +88,11 @@ class GeneralHashFunctionLibrary
          if((x = hash & 0xF0000000L) != 0)
          {
             hash ^= (x >> 24);
-            hash &= ~x;
          }
+         hash &= ~x;
       }
 
-      return (hash & 0x7FFFFFFF);
+      return hash;
    }
    /* End Of ELF Hash Function */
 
@@ -107,7 +107,7 @@ class GeneralHashFunctionLibrary
          hash = (hash * seed) + str.charAt(i);
       }
 
-      return (hash & 0x7FFFFFFF);
+      return hash;
    }
    /* End Of BKDR Hash Function */
 
@@ -121,7 +121,7 @@ class GeneralHashFunctionLibrary
          hash = str.charAt(i) + (hash << 6) + (hash << 16) - hash;
       }
 
-      return (hash & 0x7FFFFFFF);
+      return hash;
    }
    /* End Of SDBM Hash Function */
 
@@ -135,7 +135,7 @@ class GeneralHashFunctionLibrary
          hash = ((hash << 5) + hash) + str.charAt(i);
       }
 
-      return (hash & 0x7FFFFFFF);
+      return hash;
    }
    /* End Of DJB Hash Function */
 
@@ -149,7 +149,7 @@ class GeneralHashFunctionLibrary
          hash = ((hash << 5) ^ (hash >> 27)) ^ str.charAt(i);
       }
 
-      return (hash & 0x7FFFFFFF);
+      return hash;
    }
    /* End Of DEK Hash Function */
 
@@ -163,7 +163,7 @@ class GeneralHashFunctionLibrary
          hash = hash << 7 ^ str.charAt(i);
       }
 
-      return (hash & 0x7FFFFFFF);
+      return hash;
    }
    /* End Of BP Hash Function */
 
@@ -176,10 +176,10 @@ class GeneralHashFunctionLibrary
       for(int i = 0; i < str.length(); i++)
       {
       hash *= fnv_prime;
-      hash ^= str[i];
+      hash ^= str.charAt(i);
       }
 
-      return (hash & 0x7FFFFFFF);
+      return hash;
    }
    /* End Of FNV Hash Function */
 
@@ -200,7 +200,7 @@ class GeneralHashFunctionLibrary
          }
       }
 
-      return (hash & 0x7FFFFFFF);
+      return hash;
    }
    /* End Of AP Hash Function */
 
