@@ -13,7 +13,7 @@ unsigned int RSHash(char* str, unsigned int len)
       a    = a * b;
    }
 
-   return (hash & 0x7FFFFFFF);
+   return hash;
 }
 /* End Of RS Hash Function */
 
@@ -28,17 +28,17 @@ unsigned int JSHash(char* str, unsigned int len)
       hash ^= ((hash << 5) + (*str) + (hash >> 2));
    }
 
-   return (hash & 0x7FFFFFFF);
+   return hash;
 }
 /* End Of JS Hash Function */
 
 
 unsigned int PJWHash(char* str, unsigned int len)
 {
-   unsigned int BitsInUnsignedInt = (unsigned int)(sizeof(unsigned int) * 8);
-   unsigned int ThreeQuarters     = (unsigned int)((BitsInUnsignedInt  * 3) / 4);
-   unsigned int OneEighth         = (unsigned int)(BitsInUnsignedInt / 8);
-   unsigned int HighBits          = (unsigned int)(0xFFFFFFFF) << (BitsInUnsignedInt - OneEighth);
+   const unsigned int BitsInUnsignedInt = (unsigned int)(sizeof(unsigned int) * 8);
+   const unsigned int ThreeQuarters     = (unsigned int)((BitsInUnsignedInt  * 3) / 4);
+   const unsigned int OneEighth         = (unsigned int)(BitsInUnsignedInt / 8);
+   const unsigned int HighBits          = (unsigned int)(0xFFFFFFFF) << (BitsInUnsignedInt - OneEighth);
    unsigned int hash              = 0;
    unsigned int test              = 0;
    unsigned int i                 = 0;
@@ -53,7 +53,7 @@ unsigned int PJWHash(char* str, unsigned int len)
       }
    }
 
-   return (hash & 0x7FFFFFFF);
+   return hash;
 }
 /* End Of  P. J. Weinberger Hash Function */
 
@@ -70,11 +70,11 @@ unsigned int ELFHash(char* str, unsigned int len)
       if((x = hash & 0xF0000000L) != 0)
       {
          hash ^= (x >> 24);
-         hash &= ~x;
       }
+      hash &= ~x;
    }
 
-   return (hash & 0x7FFFFFFF);
+   return hash;
 }
 /* End Of ELF Hash Function */
 
@@ -90,7 +90,7 @@ unsigned int BKDRHash(char* str, unsigned int len)
       hash = (hash * seed) + (*str);
    }
 
-   return (hash & 0x7FFFFFFF);
+   return hash;
 }
 /* End Of BKDR Hash Function */
 
@@ -105,7 +105,7 @@ unsigned int SDBMHash(char* str, unsigned int len)
       hash = (*str) + (hash << 6) + (hash << 16) - hash;
    }
 
-   return (hash & 0x7FFFFFFF);
+   return hash;
 }
 /* End Of SDBM Hash Function */
 
@@ -120,7 +120,7 @@ unsigned int DJBHash(char* str, unsigned int len)
       hash = ((hash << 5) + hash) + (*str);
    }
 
-   return (hash & 0x7FFFFFFF);
+   return hash;
 }
 /* End Of DJB Hash Function */
 
@@ -134,9 +134,40 @@ unsigned int DEKHash(char* str, unsigned int len)
    {
       hash = ((hash << 5) ^ (hash >> 27)) ^ (*str);
    }
-   return (hash & 0x7FFFFFFF);
+   return hash;
 }
 /* End Of DEK Hash Function */
+
+
+unsigned int BPHash(char* str, unsigned int len)
+{
+   unsigned int hash = 0;
+   unsigned int i    = 0;
+   for(i = 0; i < len; str++, i++)
+   {
+      hash = hash << 7 ^ (*str);
+   }
+
+   return hash;
+}
+/* End Of BP Hash Function */
+
+
+unsigned int FNVHash(char* str, unsigned int len)
+{
+   const unsigned int fnv_prime = 0x811C9DC5;
+   unsigned int hash      = 0;
+   unsigned int i         = 0;
+
+   for(i = 0; i < len; str++, i++)
+   {
+      hash *= fnv_prime;
+      hash ^= (*str);
+   }
+
+   return hash;
+}
+/* End Of FNV Hash Function */
 
 
 unsigned int APHash(char* str, unsigned int len)
@@ -150,6 +181,6 @@ unsigned int APHash(char* str, unsigned int len)
                                (~((hash << 11) ^ (*str) ^ (hash >> 5)));
    }
 
-   return (hash & 0x7FFFFFFF);
+   return hash;
 }
 /* End Of AP Hash Function */

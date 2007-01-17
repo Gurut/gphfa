@@ -54,7 +54,6 @@ void test_hash_01(hf_result* result, unsigned int bucket_count, unsigned int ele
 
 int main(int argc, char* argv[])
 {
-
    hf_result result[] = {
                          {0, 0, 0, 0, 0.0, 0.0, RSHash  , "RSHash  "},
                          {0, 0, 0, 0, 0.0, 0.0, PJWHash , "PJWHash "},
@@ -63,6 +62,8 @@ int main(int argc, char* argv[])
                          {0, 0, 0, 0, 0.0, 0.0, SDBMHash, "SDBMHash"},
                          {0, 0, 0, 0, 0.0, 0.0, DJBHash , "DJBHash "},
                          {0, 0, 0, 0, 0.0, 0.0, DEKHash , "DEKHash "},
+                         {0, 0, 0, 0, 0.0, 0.0, BPHash  , "BPHash  "},
+                         {0, 0, 0, 0, 0.0, 0.0, FNVHash  ,"FNVHash "},
                          {0, 0, 0, 0, 0.0, 0.0, APHash  , "APHash  "},
                         };
 
@@ -71,7 +72,6 @@ int main(int argc, char* argv[])
 
    for(unsigned int i = 0; i < sizeof(result) / sizeof(hf_result); i++)
    {
-      printf("%d\n",i);
       test_hash_01(&result[i], 104729, 104700);
       printf("%2d\t",i);
       print_result(result[i]);
@@ -99,16 +99,21 @@ void print_result(hf_result result)
 void test_hash_01(hf_result* result, unsigned int bucket_count, unsigned int element_count)
 {
 
-   unsigned int  i                = 0;
-   char         name[24]          = {0};
-   unsigned int bucket[bucket_count];
+   unsigned int  i        = 0;
+   char          name[25] = {0};
+   unsigned int* bucket   = NULL;
 
+   if (NULL == (bucket = (unsigned int*) malloc(bucket_count * sizeof(unsigned int))))
+   {
+      return;
+   }
 
    for(i = 0; i < bucket_count; i++) bucket[i] = 0;
 
    for(i = 0; i < element_count; i++)
    {
       sprintf(name,"%4d4567890123456789%4d",element_count-i,i);
+      name[25] = '\0';
       bucket[result->function(name,24) % bucket_count]++;
    }
 
