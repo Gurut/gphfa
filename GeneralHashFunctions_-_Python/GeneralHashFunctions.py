@@ -23,14 +23,14 @@ def RSHash(key):
     for i in range(len(key)):
       hash = hash * a + ord(key[i])
       a = a * b
-    return (hash & 0x7FFFFFFF)
+    return hash
 
 
 def JSHash(key):
     hash = 1315423911
     for i in range(len(key)):
       hash ^= ((hash << 5) + ord(key[i]) + (hash >> 2))
-    return (hash & 0x7FFFFFFF)
+    return hash
 
 
 def PJWHash(key):
@@ -57,8 +57,8 @@ def ELFHash(key):
       x = hash & 0xF0000000
       if x != 0:
         hash ^= (x >> 24)
-        hash &= ~x
-    return (hash & 0x7FFFFFFF)
+      hash &= ~x
+    return hash
 
 
 def BKDRHash(key):
@@ -66,28 +66,44 @@ def BKDRHash(key):
     hash = 0
     for i in range(len(key)):
       hash = (hash * seed) + ord(key[i])
-    return (hash & 0x7FFFFFFF)
+    return hash
 
 
 def SDBMHash(key):
     hash = 0
     for i in range(len(key)):
       hash = ord(key[i]) + (hash << 6) + (hash << 16) - hash;
-    return (hash & 0x7FFFFFFF)
+    return hash
 
 
 def DJBHash(key):
     hash = 5381
     for i in range(len(key)):
        hash = ((hash << 5) + hash) + ord(key[i])
-    return (hash & 0x7FFFFFFF)
+    return hash
 
 
 def DEKHash(key):
     hash = len(key);
     for i in range(len(key)):
       hash = ((hash << 5) ^ (hash >> 27)) ^ ord(key[i])
-    return (hash & 0x7FFFFFFF)
+    return hash
+
+
+def BPHash(key):
+    hash = 0
+    for i in range(len(key)):
+       hash = hash << 7 ((hash << 5) + hash) + ord(key[i])
+    return hash
+
+
+def FNVHash(key):
+    fnv_prime = 0x811C9DC5
+    hash = 0
+    for i in range(len(key)):
+      hash *= fnv_prime
+      hash ^= ord(key[i])
+    return hash
 
 
 def APHash(key):
@@ -97,6 +113,6 @@ def APHash(key):
         hash ^= ((hash <<  7) ^ ord(key[i]) ^ (hash >> 3))
       else:
         hash ^= (~((hash << 11) ^ ord(key[i]) ^ (hash >> 5)))
-    return (hash & 0x7FFFFFFF)
+    return hash
 
 

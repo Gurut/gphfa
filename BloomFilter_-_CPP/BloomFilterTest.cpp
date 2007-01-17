@@ -21,13 +21,11 @@
 #include <iterator>
 #include <algorithm>
 #include <vector>
-#include <string>
 #include "BloomFilter.h"
 
 
 void read_file(const std::string file_name, std::vector<std::string>& buffer)
 {
-    /* Assumes no whitespace in the lines being read in. */
    std::ifstream in_file(file_name.c_str());
    if (!in_file)
    {
@@ -39,13 +37,12 @@ void read_file(const std::string file_name, std::vector<std::string>& buffer)
    std::copy( is, eof, std::back_inserter(buffer));
 }
 
-
 std::string reverse(std::string str)
 {
    char tempch;
 
    /* Reverse the string */
-   for(unsigned int i = 0; i < (str.length() / 2); i++)
+   for(unsigned int i=0; i < (str.length()/2); i++)
    {
       tempch = str[i];
       str[i] = str[str.length() - i - 1];
@@ -56,6 +53,7 @@ std::string reverse(std::string str)
 }
 
 
+
 int main(int argc, char* argv[])
 {
 
@@ -63,13 +61,7 @@ int main(int argc, char* argv[])
 
    read_file("word-list.txt",word_list);
 
-   if (word_list.empty())
-   {
-      std::cout << "ERROR: Input file invalid!" << std::endl;
-      return false;
-   }
-
-   bloom_filter filter(static_cast<unsigned int>(word_list.size() * 3));
+   bloom_filter filter(word_list.size() * 32);
 
    for(unsigned int i = 0; i < word_list.size(); i++)
    {
@@ -88,19 +80,8 @@ int main(int argc, char* argv[])
    {
       if (filter.contains(word_list[i] + reverse(word_list[i])))
       {
-         std::cout << "ERROR: key that does not exist found! => " << (word_list[i] + reverse(word_list[i])) << std::endl;
-      }
-
-      if (filter.contains(word_list[i] + word_list[i]))
-      {
-         std::cout << "ERROR: key that does not exist found! => " << (word_list[i] + reverse(word_list[i])) << std::endl;
-      }
-
-      if (filter.contains(reverse(word_list[i]) + word_list[i] + reverse(word_list[i])))
-      {
-         std::cout << "ERROR: key that does not exist found! => " << reverse(word_list[i]) + word_list[i] + reverse(word_list[i]) << std::endl;
+         std::cout << "ERROR: key that does not exist found!" << std::endl;
       }
    }
 
-   return true;
 }

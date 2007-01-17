@@ -19,7 +19,7 @@
 
 module GeneralHashFunctions
 
-  def self.rs( str, len=str.length )
+  def self.rshash( str, len=str.length )
     a    = 63689
     b    = 378551
     hash = 0
@@ -27,18 +27,18 @@ module GeneralHashFunctions
       hash = hash * a + str[i]
       a *= b
     }
-    hash & 0x7FFFFFFF
   end
 
-  def self.js( str, len=str.length )
+
+  def self.jshash( str, len=str.length )
     hash = 1315423911
     len.times{ |i|
       hash ^= ( ( hash << 5 ) + str[i] + ( hash >> 2 ) )
     }
-    hash & 0x7FFFFFFF
   end
 
-  def self.elf( str, len=str.length )
+
+  def self.elfhash( str, len=str.length )
     hash = 0
     x = 0
     len.times{ |i|
@@ -48,33 +48,59 @@ module GeneralHashFunctions
         hash &= ~x
       end
     }
-    hash & 0x7FFFFFFF
   end
 
-  def self.bkdr( str, len=str.length )
+
+  def self.bkdrhash( str, len=str.length )
     seed = 131    # 31 131 1313 13131 131313 etc..
     hash = 0
     len.times{ |i|
       hash = ( hash * seed ) + str[i]
     }
-    hash & 0x7FFFFFFF
   end
 
-  def self.sdbm( str, len=str.length )
+
+  def self.sdbmhash( str, len=str.length )
     hash = 0
     len.times{ |i|
       hash = str[i] + ( hash << 6 ) + ( hash << 16 ) - hash
     }
-    hash & 0x7FFFFFFF
   end
 
-  def self.djb( str, len=str.length )
+
+  def self.djbhash( str, len=str.length )
     hash = 5381
     len.times{ |i|
       hash = ((hash << 5) + hash) + str[i]
     }
-    hash & 0x7FFFFFFF
   end
+
+
+  def self.dekhash( str, len=str.length )
+    hash = len
+    len.times{ |i|
+      hash = ((hash << 5) ^ (hash >> 27)) ^ str[i]
+    }
+  end
+
+
+  def self.bphash( str, len=str.length )
+    hash = 0
+    len.times{ |i|
+      hash = hash << 7 ^ str[i]
+    }
+  end
+
+
+  def self.fnvhash( str, len=str.length )
+    fnv_prime = 0x811C9DC5
+    hash = 0
+    len.times{ |i|
+      hash *= fnv_prime
+      hash ^= str[i]
+    }
+  end
+
 
   def self.ap( str, len=str.length )
     hash = 0
@@ -85,7 +111,6 @@ module GeneralHashFunctions
         hash ^= ~( (hash << 11) ^ str[i] ^ (hash >> 5) )
       end
     }
-    hash & 0x7FFFFFFF
   end
 
 end

@@ -18,17 +18,20 @@ OPTIONS       = -ansi -pedantic -Wall -o
 OPTIONS_LIBS  = -ansi -pedantic -Wall -c
 
 
-CPP_SRC = BloomFilter.cpp \
-	../GeneralHashFunctions_-_CPP/GeneralHashFunctions.cpp
+CPP_SRC = ../GeneralHashFunctions_-_CPP/GeneralHashFunctions.cpp
 
 %.o: %.h %.cpp
-	$(COMPILER) $(OPTIONS_LIBS) $*.cpp -o $@
+	$(CC) $(OPTIONS_LIBS) $*.cpp -o $@
 
 OBJECTS = $(CPP_SRC:.cpp=.o)
 
 all: $(OBJECTS) BloomFilterTest
 
-BloomFilterTest: $(OBJECTS) BloomFilter.h BloomFilterTest.cpp
+
+BloomFilter.o: BloomFilter.cpp BloomFilter.h $(OBJECTS)
+	$(COMPILER) $(OPTIONS_LIBS) BloomFilter.cpp $(OBJECTS)
+
+BloomFilterTest: $(OBJECTS) BloomFilterTest.cpp
 	$(COMPILER) $(OPTIONS) BloomFilterTest BloomFilterTest.cpp $(OBJECTS)
 
 clean:
