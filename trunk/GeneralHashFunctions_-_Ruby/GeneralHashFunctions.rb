@@ -27,6 +27,7 @@ module GeneralHashFunctions
       hash = hash * a + str[i]
       a *= b
     }
+    return hash
   end
 
 
@@ -35,6 +36,7 @@ module GeneralHashFunctions
     len.times{ |i|
       hash ^= ( ( hash << 5 ) + str[i] + ( hash >> 2 ) )
     }
+    return hash
   end
 
 
@@ -48,6 +50,7 @@ module GeneralHashFunctions
         hash &= ~x
       end
     }
+    return hash
   end
 
 
@@ -57,6 +60,7 @@ module GeneralHashFunctions
     len.times{ |i|
       hash = ( hash * seed ) + str[i]
     }
+    return hash
   end
 
 
@@ -65,6 +69,7 @@ module GeneralHashFunctions
     len.times{ |i|
       hash = str[i] + ( hash << 6 ) + ( hash << 16 ) - hash
     }
+    return hash
   end
 
 
@@ -73,6 +78,7 @@ module GeneralHashFunctions
     len.times{ |i|
       hash = ((hash << 5) + hash) + str[i]
     }
+    return hash
   end
 
 
@@ -81,6 +87,7 @@ module GeneralHashFunctions
     len.times{ |i|
       hash = ((hash << 5) ^ (hash >> 27)) ^ str[i]
     }
+    return hash
   end
 
 
@@ -89,6 +96,7 @@ module GeneralHashFunctions
     len.times{ |i|
       hash = hash << 7 ^ str[i]
     }
+    return hash
   end
 
 
@@ -99,6 +107,7 @@ module GeneralHashFunctions
       hash *= fnv_prime
       hash ^= str[i]
     }
+    return hash
   end
 
 
@@ -111,6 +120,7 @@ module GeneralHashFunctions
         hash ^= ~( (hash << 11) ^ str[i] ^ (hash >> 5) )
       end
     }
+    return hash
   end
 
 end
