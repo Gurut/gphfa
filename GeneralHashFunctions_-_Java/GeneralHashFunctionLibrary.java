@@ -186,7 +186,7 @@ class GeneralHashFunctionLibrary
 
    public long APHash(String str)
    {
-      long hash = 0;
+      long hash = 0xAAAAAAAA;
 
       for(int i = 0; i < str.length(); i++)
       {

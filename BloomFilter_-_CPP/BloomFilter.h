@@ -69,7 +69,7 @@ public:
       hash_function.push_back(APHash  );
    }
 
-   void insert(const std::string key)
+   void insert(const std::string& key)
    {
       for(std::size_t i = 0; i < hash_function.size(); i++)
       {
@@ -78,7 +78,7 @@ public:
       }
    }
 
-   bool contains(const std::string key)
+   bool contains(const std::string& key)
    {
       for(std::size_t i = 0; i < hash_function.size(); i++)
       {

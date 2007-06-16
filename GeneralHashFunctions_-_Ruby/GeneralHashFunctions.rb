@@ -112,7 +112,7 @@ module GeneralHashFunctions
 
 
   def self.ap( str, len=str.length )
-    hash = 0
+    hash = 0xAAAAAAAA
     len.times{ |i|
       if (i & 1) == 0
         hash ^= (hash << 7) ^ str[i] ^ (hash >> 3)

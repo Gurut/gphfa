@@ -36,6 +36,7 @@ unsigned int SDBMHash(const std::string& str);
 unsigned int DJBHash (const std::string& str);
 unsigned int DEKHash (const std::string& str);
 unsigned int BPHash  (const std::string& str);
+unsigned int FNVHash (const std::string& str);
 unsigned int APHash  (const std::string& str);
 
 

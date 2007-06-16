@@ -195,7 +195,7 @@ function APHash(const Str : String) : Cardinal;
 var
   i : Cardinal;
 begin
-  Result := 0;
+  Result := $AAAAAAAA;
   for i := 1 to Length(Str) do
   begin
     if ((i - 1) and 1) = 0 then
