@@ -162,7 +162,7 @@ unsigned int FNVHash(const std::string& str)
 
 unsigned int APHash(const std::string& str)
 {
-   unsigned int hash = 0;
+   unsigned int hash = 0xAAAAAAAA;
 
    for(std::size_t i = 0; i < str.length(); i++)
    {

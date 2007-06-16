@@ -172,7 +172,7 @@ unsigned int FNVHash(char* str, unsigned int len)
 
 unsigned int APHash(char* str, unsigned int len)
 {
-   unsigned int hash = 0;
+   unsigned int hash = 0xAAAAAAAA;
    unsigned int i    = 0;
 
    for(i = 0; i < len; str++, i++)

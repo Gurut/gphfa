@@ -93,7 +93,7 @@ def DEKHash(key):
 def BPHash(key):
     hash = 0
     for i in range(len(key)):
-       hash = hash << 7 ((hash << 5) + hash) + ord(key[i])
+       hash = hash << 7 ^ ord(key[i])
     return hash
 
 
@@ -107,7 +107,7 @@ def FNVHash(key):
 
 
 def APHash(key):
-    hash = 0
+    hash = 0xAAAAAAAA
     for i in range(len(key)):
       if ((i & 1) == 0):
         hash ^= ((hash <<  7) ^ ord(key[i]) ^ (hash >> 3))
