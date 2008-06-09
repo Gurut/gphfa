@@ -1,6 +1,6 @@
 #
 # Bloom Filter Master MakeFile
-# By Arash Partow - 2002
+# By Arash Partow - 2000
 #
 # URL: http://www.partow.net/programming/hashfunctions/index.html
 #

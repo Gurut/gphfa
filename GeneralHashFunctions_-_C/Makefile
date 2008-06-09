@@ -1,6 +1,6 @@
 #
 # General Hash Function Algorithms Master MakeFile
-# By Arash Partow - 2002
+# By Arash Partow - 2000
 #
 # URL: http://www.partow.net/programming/hashfunctions/index.html
 #
@@ -16,16 +16,13 @@ OPTIONS       = -std=c99 -pedantic -Wall -o
 OPTIONS_LIBS  = -std=c99 -pedantic -Wall -c
 
 
-all: GeneralHashFunctions.o HashTest GPHFATest
+all: GeneralHashFunctions.o HashTest
 
 GeneralHashFunctions.o: GeneralHashFunctions.c GeneralHashFunctions.h
 	$(COMPILER) $(OPTIONS_LIBS) GeneralHashFunctions.c
 
 HashTest: GeneralHashFunctions.c HashTest.c
 	$(COMPILER) $(OPTIONS) HashTest HashTest.c GeneralHashFunctions.o
-
-GPHFATest: GeneralHashFunctions.c GPHFATest.c
-	$(COMPILER) $(OPTIONS) GPHFATest GPHFATest.c GeneralHashFunctions.o
 
 clean:
 	rm -f core *.o *.bak *stackdump *#

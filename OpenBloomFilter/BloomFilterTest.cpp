@@ -39,7 +39,7 @@ int main(int argc, char* argv[])
    std::vector<std::string> word_list;
    std::vector<std::string> outliers;
 
-   read_file("word-list-large-2.txt",word_list);
+   read_file("word-list-large.txt",word_list);
 
    if (word_list.empty())
    {

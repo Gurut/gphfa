@@ -49,6 +49,7 @@ public:
    {
       table_size = tbl_size;
       hash_table = new unsigned char[table_size];
+      for(std::size_t i = 0; i < table_size; ++i) hash_table[i] = 0;
       register_default_hash_functions();
    }
 

@@ -192,11 +192,11 @@ class GeneralHashFunctionLibrary
       {
          if ((i & 1) == 0)
          {
-            hash ^= ((hash << 7) ^ str.charAt(i) ^ (hash >> 3));
+            hash ^= ((hash << 7) ^ str.charAt(i) * (hash >> 3));
          }
          else
          {
-            hash ^= (~((hash << 11) ^ str.charAt(i) ^ (hash >> 5)));
+            hash ^= (~((hash << 11) + str.charAt(i) ^ (hash >> 5)));
          }
       }
 

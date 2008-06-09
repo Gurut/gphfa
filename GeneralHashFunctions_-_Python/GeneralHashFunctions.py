@@ -110,9 +110,9 @@ def APHash(key):
     hash = 0xAAAAAAAA
     for i in range(len(key)):
       if ((i & 1) == 0):
-        hash ^= ((hash <<  7) ^ ord(key[i]) ^ (hash >> 3))
+        hash ^= ((hash <<  7) ^ ord(key[i]) * (hash >> 3))
       else:
-        hash ^= (~((hash << 11) ^ ord(key[i]) ^ (hash >> 5)))
+        hash ^= (~((hash << 11) + ord(key[i]) ^ (hash >> 5)))
     return hash
 
 
