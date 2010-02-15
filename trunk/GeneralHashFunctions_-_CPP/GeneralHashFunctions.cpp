@@ -167,7 +167,7 @@ unsigned int APHash(const std::string& str)
    for(std::size_t i = 0; i < str.length(); i++)
    {
       hash ^= ((i & 1) == 0) ? (  (hash <<  7) ^ str[i] * (hash >> 3)) :
-                               (~((hash << 11) + str[i] ^ (hash >> 5)));
+                               (~((hash << 11) + (str[i] ^ (hash >> 5))));
    }
 
    return hash;

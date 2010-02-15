@@ -178,7 +178,7 @@ unsigned int APHash(char* str, unsigned int len)
    for(i = 0; i < len; str++, i++)
    {
       hash ^= ((i & 1) == 0) ? (  (hash <<  7) ^ (*str) * (hash >> 3)) :
-                               (~((hash << 11) + (*str) ^ (hash >> 5)));
+                               (~((hash << 11) + ((*str) ^ (hash >> 5))));
    }
 
    return hash;
