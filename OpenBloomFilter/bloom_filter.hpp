@@ -241,7 +241,7 @@ private:
       while(remaining_length >= 2)
       {
          hash ^=    (hash <<  7) ^ str[i++] * (hash >> 3);
-         hash ^= (~((hash << 11) + str[i++] ^ (hash >> 5)));
+         hash ^= (~((hash << 11) + (str[i++] ^ (hash >> 5))));
          remaining_length -= 2;
       }
       if (remaining_length)

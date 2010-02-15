@@ -17,16 +17,12 @@
 */
 
 
-
-
-
 #include <iostream>
-#include <string.h>
+#include <string>
 #include "GeneralHashFunctions.h"
 
 int main(int argc, char* argv[])
 {
-
    std::string key = "abcdefghijklmnopqrstuvwxyz1234567890";
 
    std::cout << "General Purpose Hash Function Algorithms Test" << std::endl;
@@ -44,7 +40,5 @@ int main(int argc, char* argv[])
    std::cout << "10. BP-Hash Function Value:   " << BPHash(key)   << std::endl;
    std::cout << "11. AP-Hash Function Value:   " << APHash(key)   << std::endl;
 
-   exit(EXIT_SUCCESS);
    return true;
-
 }
