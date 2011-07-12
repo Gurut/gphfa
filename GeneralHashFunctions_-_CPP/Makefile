@@ -14,6 +14,7 @@
 COMPILER      = -c++
 OPTIONS       = -ansi -pedantic -Wall -o
 OPTIONS_LIBS  = -ansi -pedantic -Wall -c
+LINKER_OPT    = -L/usr/lib -lstdc++
 
 all: GeneralHashFunctions.o HashTest
 
@@ -21,7 +22,7 @@ GeneralHashFunctions.o: GeneralHashFunctions.cpp GeneralHashFunctions.h
 	$(COMPILER) $(OPTIONS_LIBS) GeneralHashFunctions.cpp
 
 HashTest: GeneralHashFunctions.cpp HashTest.cpp
-	$(COMPILER) $(OPTIONS) HashTest HashTest.cpp GeneralHashFunctions.o
+	$(COMPILER) $(OPTIONS) HashTest HashTest.cpp GeneralHashFunctions.o $(LINKER_OPT)
 
 
 clean:
@@ -30,3 +31,4 @@ clean:
 #
 # The End !
 #
+
